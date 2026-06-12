@@ -18,6 +18,12 @@ O projeto aborda a dificuldade na organização e no controle de acervos bibliot
 
 ---
 
+## Orientador
+
+- Ricardo Palhares
+
+---
+
 ## Integrantes
 
 - Gustavo Mascio Lia e Silva  
@@ -25,9 +31,3 @@ O projeto aborda a dificuldade na organização e no controle de acervos bibliot
 - João Pedro de Souza Alli
 - Luís Dantas Marinho
 - Pedro Henrique Silva Lopes
-
----
-
-## Orientador
-
-- Ricardo Palhares
