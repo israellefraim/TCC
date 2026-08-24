@@ -1,30 +1,28 @@
 import { useState } from "react";
 
-function ListGroup() {
-  const movies = [
-    "How To Train Your Dragon I",
-    "Pulp Fiction",
-    "The Dark Knight",
-    "Kill Bill Vol. II",
-    "Mônica's Ganga",
-  ];
+interface ListGroupProps {
+  items: string[],
+  heading: string
+}
+
+function ListGroup({ items, heading }: ListGroupProps) {
   const [selectedIndex, setSelectedIndex] = useState(-1);
 
   return (
     <>
-      <h1>List</h1>
+      <h1>{heading}</h1>
       <ul className="list-group">
-        {movies.map((movie, index) => (
+        {items.map((item, index) => (
           <li
             className={
               selectedIndex == index
                 ? "list-group-item active"
                 : "list-group-item"
             }
-            key={movie}
+            key={item}
             onClick={() => setSelectedIndex(index)}
           >
-            {movie}
+            {item}
           </li>
         ))}
       </ul>
