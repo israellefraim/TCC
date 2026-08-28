@@ -45,7 +45,7 @@ function BookForm() {
         {/* ISBN -- Required Text MaxLength=13 */}
         <div className="mb-3">
           <label htmlFor="inputISBN" className="form-label">ISBN</label>
-          <input required type="text" maxLength={13} className="form-control" id="inputISBN" value={isbn} onChange={(event) => setISBN(Number(event.target.value))}/>
+          <input required type="text" maxLength={13} className="form-control" id="inputISBN" value={isbn} onChange={(event) => setISBN(event.target.value)}/>
         </div>
         {/* Title -- Required */}
         <div className="mb-3">
