@@ -1,5 +1,7 @@
 import { useState } from "react";
-import { supabase } from "../lib/supabase-client.ts";
+import { supabase } from "../../lib/supabase-client.ts";
+
+import BookFields from "./BookFields.tsx"
 
 function BookForm() {
     const [isbn, setISBN] = useState("");
@@ -51,49 +53,31 @@ function BookForm() {
       <h1>Cadastro de Livros</h1>
       <br></br>
       <form onSubmit={sendForm}>
-        <fieldset className="border border-dark p-3 rounded mb-3">
-          <legend className="float-none w-auto px-2">Informações da Obra</legend>
-          {/* ISBN -- Required Text MaxLength=13 */}
-          <div className="mb-3">
-            <label htmlFor="inputISBN" className="form-label">ISBN</label>
-            <input required type="text" maxLength={13} className="form-control" id="inputISBN" value={isbn} onChange={(event) => setISBN(event.target.value)}/>
-          </div>
-          {/* Title -- Required */}
-          <div className="mb-3">
-            <label htmlFor="inputTitle" className="form-label">Título</label>
-            <input required type="text" className="form-control" id="inputTitle" value={title} onChange={(event) => setTitle(event.target.value)}/>
-          </div>
-          {/* Subtitle input */}
-          <div className="mb-3">
-            <label htmlFor="inputSubtitle" className="form-label">Subtítulo</label>
-            <input type="text" className="form-control" id="inputSubtitle" value={subtitle} onChange={(event) => setSubtitle(event.target.value)}/>
-          </div>
-          {/* Edition -- Number */}
-          <div className="mb-3">
-            <label htmlFor="inputEdition" className="form-label">Edição</label>
-            <input type="number" className="form-control" id="inputEdition" value={edition} onChange={(event) => setEdition(Number(event.target.value))}/>
-          </div>
-          {/* Language input */}
-          <div className="mb-3">
-            <label htmlFor="inputLanguage" className="form-label">Idioma</label>
-            <input type="text" className="form-control" id="inputLanguage" value={language} onChange={(event) => setLanguage(event.target.value)}/>
-          </div>
-          {/* Publication Year -- Number Min=1000 Max=9999 */}
-          <div className="mb-3">
-            <label htmlFor="inputPublicationYear" className="form-label">Ano de Publicação</label>
-            <input type="number" min={1000} max={9999} className="form-control" id="inputPublicationYear" value={publicationYear} onChange={(event) => setPublicationYear(Number(event.target.value))}/>
-          </div>                    
-        </fieldset>
 
-        <fieldset className="border border-dark p-3 rounded mb-3">
-          <legend className="float-none w-auto px-2">Autoria</legend>
-        </fieldset>
+        {/* BOOKS FIELD */}
+        <BookFields 
+          isbn={isbn}
+          setISBN={setISBN}
+          title={title}
+          setTitle={setTitle}
+          subtitle={subtitle} 
+          setSubtitle={setSubtitle}
+          edition={edition}
+          setEdition={setEdition}
+          language={language}
+          setLanguage={setLanguage}
+          publicationYear={publicationYear}
+          setPublicationYear={setPublicationYear}
+        />
 
+        
+
+        {/* PUBLISHERS FIELD */}
         <fieldset className="border border-dark p-3 rounded mb-3">
           <legend className="float-none w-auto px-2">Editora</legend>
-
         </fieldset>
 
+        {/* COLLECTION FIELD */}
         <fieldset className="border border-dark p-3 rounded mb-3">
           <legend className="float-none w-auto px-2">Acervo</legend>
           {/* Condition -- Number */}
@@ -110,6 +94,7 @@ function BookForm() {
         </fieldset>
 
         <button type="submit" className="btn btn-primary">Enviar</button>
+        
       </form>
       <br></br>
     </>
