@@ -1,4 +1,3 @@
-import ListGroup from "./components/ListGroup";
 import BookForm from "./components/BookForm";
 
 function App() {
