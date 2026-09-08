@@ -1,4 +1,5 @@
-import BookForm from "./components/BookForm";
+//import BookForm from "./components/BookForm";
+import LoginForm from "./components/LoginForm";
 
 function App() {
   const movies = [
@@ -9,7 +10,8 @@ function App() {
     "Mônica's Ganga",
   ];
 
-  return <BookForm/> //<ListGroup items={movies} heading="Movies" />; 
+  return <LoginForm/> 
+  //<BookForm/> //<ListGroup items={movies} heading="Movies" />; 
 }
 
 export default App;
