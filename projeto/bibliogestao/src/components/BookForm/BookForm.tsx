@@ -1,16 +1,17 @@
 import { useState } from "react";
 import { supabase } from "../../lib/supabase-client.ts";
 
-import BookFields from "./BookFields.tsx"
+import BookFields from "./BookFields.tsx";
+import AuthorFields from "./AuthorFields.tsx";
 
 function BookForm() {
     const [isbn, setISBN] = useState("");
     const [title, setTitle] = useState("");
     const [subtitle, setSubtitle] = useState("");
-    const [edition, setEdition] = useState("");
+    const [edition, setEdition] = useState(1);
     const [language, setLanguage] = useState("");
-    const [publicationYear, setPublicationYear] = useState("");
-    const [numberBooksInserted, setNumberBooksInserted] = useState("");
+    const [publicationYear, setPublicationYear] = useState(2026);
+    const [numberBooksInserted, setNumberBooksInserted] = useState(1);
     
     const [authorFullName, setAuthorFullName] = useState("");
     
@@ -20,7 +21,7 @@ function BookForm() {
     
     const [genres, setGenres] = useState<string[]>([]);
 
-    const [condition, setCondition] = useState("");
+    const [condition, setCondition] = useState(0);
 
     async function sendForm(event: React.FormEvent) {
       event.preventDefault();
@@ -70,7 +71,8 @@ function BookForm() {
           setPublicationYear={setPublicationYear}
         />
 
-        
+        {/* AUTHOR FIELD */}
+        <AuthorFields />
 
         {/* PUBLISHERS FIELD */}
         <fieldset className="border border-dark p-3 rounded mb-3">
