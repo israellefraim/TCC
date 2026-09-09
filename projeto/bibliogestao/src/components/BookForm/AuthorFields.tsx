@@ -1,4 +1,13 @@
-function AuthorFields ({}) {    
+interface AuthorFieldsProps {
+    authorFullName: string;
+    setAuthorFullName: React.Dispatch<React.SetStateAction<string>>;
+}
+
+function AuthorFields ({
+    authorFullName,
+    setAuthorFullName,
+}: AuthorFieldsProps) {  
+
     return (
         <>
         {/* AUTHOR FIELD */}
