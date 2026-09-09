@@ -1,7 +1,4 @@
-function AuthorFields ({
-
-}) 
-{    
+function AuthorFields ({}) {    
     return (
         <>
         {/* AUTHOR FIELD */}
