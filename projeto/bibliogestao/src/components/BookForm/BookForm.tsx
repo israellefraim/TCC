@@ -14,7 +14,7 @@ function BookForm() {
     const [language, setLanguage] = useState("");
     const [publicationYear, setPublicationYear] = useState(2026);
     
-    const [authorFullName, setAuthorFullName] = useState("");
+    const [authorFullName, setAuthorFullName] = useState<string[]>([""]);
     
     const [publisherName, setPublisherName] = useState("");
     const [publisherCNPJ, setPublisherCNPJ] = useState("");
