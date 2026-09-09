@@ -3,6 +3,7 @@ import { supabase } from "../../lib/supabase-client.ts";
 
 import BookFields from "./BookFields.tsx";
 import AuthorFields from "./AuthorFields.tsx";
+import PublisherFields from "./PublisherFields.tsx";
 import CollectionFields from "./CollectionFields.tsx";
 
 function BookForm() {
@@ -76,9 +77,14 @@ function BookForm() {
         <AuthorFields />
 
         {/* PUBLISHERS FIELD */}
-        <fieldset className="border border-dark p-3 rounded mb-3">
-          <legend className="float-none w-auto px-2">Editora</legend>
-        </fieldset>
+        <PublisherFields 
+          publisherName={publisherName}
+          setPublisherName={setPublisherName}
+          publisherCNPJ={publisherCNPJ}
+          setPublisherCNPJ={setPublisherCNPJ}
+          publisherCountry={publisherCountry}
+          setPublisherCountry={setPublisherCountry}
+        />
 
         {/* COLLECTION FIELD */}
         <CollectionFields
