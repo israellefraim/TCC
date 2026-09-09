@@ -3,6 +3,7 @@ import { supabase } from "../../lib/supabase-client.ts";
 
 import BookFields from "./BookFields.tsx";
 import AuthorFields from "./AuthorFields.tsx";
+import CollectionFields from "./CollectionFields.tsx";
 
 function BookForm() {
     const [isbn, setISBN] = useState("");
@@ -11,7 +12,6 @@ function BookForm() {
     const [edition, setEdition] = useState(1);
     const [language, setLanguage] = useState("");
     const [publicationYear, setPublicationYear] = useState(2026);
-    const [numberBooksInserted, setNumberBooksInserted] = useState(1);
     
     const [authorFullName, setAuthorFullName] = useState("");
     
@@ -22,6 +22,7 @@ function BookForm() {
     const [genres, setGenres] = useState<string[]>([]);
 
     const [condition, setCondition] = useState(0);
+    const [numberBooksInserted, setNumberBooksInserted] = useState(1);
 
     async function sendForm(event: React.FormEvent) {
       event.preventDefault();
@@ -80,20 +81,12 @@ function BookForm() {
         </fieldset>
 
         {/* COLLECTION FIELD */}
-        <fieldset className="border border-dark p-3 rounded mb-3">
-          <legend className="float-none w-auto px-2">Acervo</legend>
-          {/* Condition -- Number */}
-          <div className="mb-3">
-            <label htmlFor="inputCondition" className="form-label">Condição (0-5)</label>
-            <input type="range" className="form-range" min="0" max="5" id="inputCondition" value={condition} onChange={(event) => setCondition(Number(event.target.value))}/>
-            <div id="emailHelp" className="form-text">0 - Irrecuperável; 1 - Condição Precária; 2 - Desgastado; 3 - Condição regular; 4 - Bem conservado; 5 - Novo</div>
-          </div>
-          {/* Books Qty. -- Number */}
-          <div className="mb-3">
-            <label htmlFor="inputNumberBooksInserted" className="form-label">Quantidade de livros a ser inseridos</label>
-            <input type="number" className="form-control" id="inputNumberBooksInserted" value={numberBooksInserted} onChange={(event) => setNumberBooksInserted(Number(event.target.value))}/>
-          </div>
-        </fieldset>
+        <CollectionFields
+          condition={condition}
+          setCondition={setCondition}
+          numberBooksInserted={numberBooksInserted}
+          setNumberBooksInserted={setNumberBooksInserted}
+        />
 
         <button type="submit" className="btn btn-primary">Enviar</button>
         
