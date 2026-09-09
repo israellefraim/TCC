@@ -7,21 +7,27 @@ import PublisherFields from "./PublisherFields.tsx";
 import CollectionFields from "./CollectionFields.tsx";
 
 function BookForm() {
+    // Book
     const [isbn, setISBN] = useState("");
     const [title, setTitle] = useState("");
     const [subtitle, setSubtitle] = useState("");
     const [edition, setEdition] = useState(1);
     const [language, setLanguage] = useState("");
     const [publicationYear, setPublicationYear] = useState(2026);
-    
+
+    // Genres
+    const [genres, setGenres] = useState<string[]>([]);
+    const [inputGenres, setInputGenres] = useState("");
+
+    // Author
     const [authorFullName, setAuthorFullName] = useState("");
-    
+
+    // Publisher
     const [publisherName, setPublisherName] = useState("");
     const [publisherCNPJ, setPublisherCNPJ] = useState("");
     const [publisherCountry, setPublisherCountry] = useState("");
-    
-    const [genres, setGenres] = useState<string[]>([]);
 
+    // Collection
     const [condition, setCondition] = useState(0);
     const [numberBooksInserted, setNumberBooksInserted] = useState(1);
 
@@ -71,6 +77,11 @@ function BookForm() {
           setLanguage={setLanguage}
           publicationYear={publicationYear}
           setPublicationYear={setPublicationYear}
+
+          genres={genres}
+          setGenres={setGenres}
+          inputGenres={inputGenres}
+          setInputGenres={setInputGenres}
         />
 
         {/* AUTHOR FIELD */}
