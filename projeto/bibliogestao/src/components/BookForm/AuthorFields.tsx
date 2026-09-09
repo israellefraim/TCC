@@ -8,6 +8,17 @@ function AuthorFields ({
     setAuthorFullName,
 }: AuthorFieldsProps) {  
 
+    function addAuthor() {
+        setAuthorFullName([...authorFullName, ""]);
+    }
+
+    function handleAuthorChange(index: number, value: string) {
+        const newAuthors = [...authorFullName];
+        newAuthors[index] = value;
+
+        setAuthorFullName(newAuthors);
+    }
+
     return (
         <>
         {/* AUTHOR FIELD */}
@@ -16,6 +27,7 @@ function AuthorFields ({
                 Autoria
             </legend>
 
+            {authorFullName}
             <div className="input-group mb-3">
                 <label htmlFor="inputGroupSelect01" className="input-group-text">Autor 1</label>
                     <input className="form-control" list="datalistOptions" id="inputGroupSelect01" placeholder="Digite o nome do autor..."/>
