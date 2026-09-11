@@ -1,3 +1,5 @@
+//import BookForm from "./components/BookForm";
+import LoginForm from "./components/LoginForm";
 import BookForm from "./components/BookForm/BookForm.tsx";
 
 function App() {
@@ -9,7 +11,8 @@ function App() {
     "Mônica's Ganga",
   ];
 
-  return <BookForm/> //<ListGroup items={movies} heading="Movies" />; 
+  return <LoginForm/> 
+  //<BookForm/> //<ListGroup items={movies} heading="Movies" />; 
 }
 
 export default App;
