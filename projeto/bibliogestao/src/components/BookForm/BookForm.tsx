@@ -14,14 +14,14 @@ function BookForm() {
     const [edition, setEdition] = useState(1);
     const [language, setLanguage] = useState("");
     const [publicationYear, setPublicationYear] = useState(2026);
-
+    
     // Genres
     const [genres, setGenres] = useState<string[]>([]);
     const [inputGenres, setInputGenres] = useState("");
 
     // Author
-    const [authorFullName, setAuthorFullName] = useState("");
-
+    const [authorFullName, setAuthorFullName] = useState<string[]>([""]);
+    
     // Publisher
     const [publisherName, setPublisherName] = useState("");
     const [publisherCNPJ, setPublisherCNPJ] = useState("");
