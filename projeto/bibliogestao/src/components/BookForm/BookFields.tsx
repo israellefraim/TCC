@@ -11,6 +11,10 @@ interface BooksFieldProps {
     setLanguage: React.Dispatch<React.SetStateAction<string>>;
     publicationYear: number;
     setPublicationYear: React.Dispatch<React.SetStateAction<number>>;
+    genres: string[];
+    setGenres: React.Dispatch<React.SetStateAction<string[]>>;
+    inputGenres: string;
+    setInputGenres: React.Dispatch<React.SetStateAction<string>>;
 }
 
 function BookFields ({ 
@@ -26,7 +30,36 @@ function BookFields ({
     setLanguage,
     publicationYear,
     setPublicationYear,
+    genres,
+    setGenres,
+    inputGenres,
+    setInputGenres,
 }: BooksFieldProps) {
+
+    const addGenre = () => {
+      const genre = inputGenres.trim();
+
+      if (!genre) return;
+
+      if (genres.includes(genre)) {
+        setInputGenres("");
+        return;
+      }
+
+      setGenres([...genres, genre]);
+      setInputGenres("");
+    }
+
+    const removeGenre = (genreToRemove: string) => {
+      setGenres(genres.filter((genre) => genre !== genreToRemove));
+    }
+
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        addGenre();
+      }
+    }
 
     return (
         <>
@@ -62,7 +95,24 @@ function BookFields ({
               <div className="mb-3">
                 <label htmlFor="inputPublicationYear" className="form-label">Ano de Publicação</label>
                 <input type="number" min={1000} max={9999} className="form-control" id="inputPublicationYear" value={publicationYear} onChange={(event) => setPublicationYear(Number(event.target.value))}/>
-              </div>                    
+              </div>         
+              {/* Genres Input */}
+              <div className="mb-3">
+                <label htmlFor="inputGenres" className="form-label">Gêneros</label>
+                <div className="d-flex gap-3">
+                  <input required type="text" className="form-control" id="inputGenres" value={inputGenres} onKeyDown={handleKeyDown} onChange={(event) => setInputGenres(event.target.value)}/>
+                  <input className="btn btn-primary" type="button" value="Adicionar" onClick={addGenre}/>
+                </div>
+              </div>
+              {/* Genres List */}
+              <div className="mb-3 d-flex gap-2">
+                {genres.map((genre) => 
+                  <span key={genre} className="badge text-bg-primary fs-6">
+                    {genre}
+                    <button type="button" className="border-0 bg-transparent text-white fw-bold p-0" aria-label={`Remover ${genre}`} style={{ fontSize: "1.1rem", lineHeight: 1, marginLeft: "6px" }} onClick={() => removeGenre(genre)}>x  </button>
+                  </span>
+                )}
+              </div>
             </fieldset>
         </>
     )

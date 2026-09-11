@@ -14,8 +14,7 @@ function CollectionFields ({
 
     return (
         <>
-            {/* COLLECTION FIELD */}
-            <fieldset className="border border-dark p-3 rounded mb-3">
+          <fieldset className="border border-dark p-3 rounded mb-3">
             <legend className="float-none w-auto px-2">Acervo</legend>
             {/* Condition -- Number */}
             <div className="mb-3">
@@ -28,7 +27,7 @@ function CollectionFields ({
                 <label htmlFor="inputNumberBooksInserted" className="form-label">Quantidade de livros a ser inseridos</label>
                 <input type="number" className="form-control" id="inputNumberBooksInserted" value={numberBooksInserted} onChange={(event) => setNumberBooksInserted(Number(event.target.value))}/>
             </div>
-            </fieldset>
+          </fieldset>
         </>
     )
 }
