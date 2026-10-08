@@ -1,3 +1,4 @@
+import logonova from "../../assets/logonova.png";
 import { useState } from "react";
 import { supabase } from "../../lib/supabase-client";
 
@@ -33,19 +34,20 @@ function BookForm() {
   // Collection
   const [numberBooksInserted, setNumberBooksInserted] = useState(1);
   const [bookConditions, setBookConditions] = useState<number[]>([
-    0, // Irrecuperável
-    0, // Precário
-    0, // Desgastado
-    0, // Regular
-    0, // Bem conservado
-    0, // Novo
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
   ]);
 
   async function sendForm(event: React.SubmitEvent) {
     event.preventDefault();
 
     const totalDistributed = bookConditions.reduce(
-      (total, quantity) => total + quantity, 0
+      (total, quantity) => total + quantity,
+      0
     );
 
     if (totalDistributed !== numberBooksInserted) {
@@ -56,35 +58,29 @@ function BookForm() {
     const conditionsObject = Object.fromEntries(
       bookConditions.map((quantity, index) => [
         `condition_${index}`,
-        quantity
+        quantity,
       ])
     );
 
     const publisherId = await findOrCreatePublisher(
       publisherName,
       publisherCountry
-    )
+    );
 
-    const authorIds = await findOrCreateAuthors(
-      authorFullName
-    )
+    const authorIds = await findOrCreateAuthors(authorFullName);
 
-    const genreIds = await findOrCreateGenres(
-      genres
-    )
+    const genreIds = await findOrCreateGenres(genres);
 
     const newBook = {
-      // Foreign Keys
       publisher_id: publisherId,
-      // Rows
       isbn: isbn,
       title: title,
       subtitle: subtitle,
       edition: edition,
       language: language,
       publication_year: publicationYear,
-      stock_quantity: numberBooksInserted,   
-      conditions: conditionsObject   
+      stock_quantity: numberBooksInserted,
+      conditions: conditionsObject,
     };
 
     const { data, error } = await supabase
@@ -102,13 +98,13 @@ function BookForm() {
 
     const bookAuthors = authorIds.map((authorId) => ({
       book_id: bookId,
-      author_id: authorId
-    }))
+      author_id: authorId,
+    }));
 
     const bookGenres = genreIds.map((genreId) => ({
       book_id: bookId,
-      genre_id: genreId
-    }))
+      genre_id: genreId,
+    }));
 
     const { error: bookAuthorsError } = await supabase
       .from("BookAuthors")
@@ -133,56 +129,133 @@ function BookForm() {
 
   return (
     <>
-      <h1>Cadastro de Livros</h1>
-      <br></br>
-      <form onSubmit={sendForm}>
-        {/* BOOKS FIELD */}
-        <BookFields
-          isbn={isbn}
-          setISBN={setISBN}
-          title={title}
-          setTitle={setTitle}
-          subtitle={subtitle}
-          setSubtitle={setSubtitle}
-          edition={edition}
-          setEdition={setEdition}
-          language={language}
-          setLanguage={setLanguage}
-          publicationYear={publicationYear}
-          setPublicationYear={setPublicationYear}
-          genres={genres}
-          setGenres={setGenres}
-          inputGenres={inputGenres}
-          setInputGenres={setInputGenres}
-        />
+      <style>
+        {`
+          .meu-placeholder::placeholder {
+            color: #adacac;
+            font-size: 17px;
+          }
 
-        {/* AUTHOR FIELD */}
-        <AuthorFields
-          authorFullName={authorFullName}
-          setAuthorFullName={setAuthorFullName}
-        />
+          .font-input {
+            font-size: 17px;
+          }
 
-        {/* PUBLISHERS FIELD */}
-        <PublisherFields
-          publisherName={publisherName}
-          setPublisherName={setPublisherName}
-          publisherCountry={publisherCountry}
-          setPublisherCountry={setPublisherCountry}
-        />
+          .campo-bibliogestao {
+            border-radius: 16px !important;
+            font-size: 17px;
+            padding: 12px 16px;
+          }
 
-        {/* COLLECTION FIELD */}
-        <CollectionFields
-          numberBooksInserted={numberBooksInserted}
-          setNumberBooksInserted={setNumberBooksInserted}
-          bookConditions={bookConditions}
-          setBookConditions={setBookConditions}
-        />
+          .fieldset-bibliogestao {
+            border: 1px solid #dee2e6 !important;
+            border-radius: 20px !important;
+            padding: 25px !important;
+            margin-bottom: 25px;
+          }
 
-        <button type="submit" className="btn btn-primary">
-          Enviar
-        </button>
-      </form>
-      <br></br>
+          .legend-bibliogestao {
+            font-weight: 700;
+            color: #1A335B;
+            font-size: 20px;
+          }
+
+          .label-bibliogestao {
+            font-weight: 600;
+            margin-bottom: 8px;
+          }
+
+          .botao-bibliogestao {
+            background-color: #1A335B !important;
+            border-color: #1A335B !important;
+          }
+
+          .botao-bibliogestao:hover {
+            background-color: #0f1c35 !important;
+            border-color: #0f1c35 !important;
+          }
+        `}
+      </style>
+
+      <div
+        className="container-fluid min-vh-100 d-flex justify-content-center py-5"
+        style={{ backgroundColor: "#0f1c35" }}
+      >
+        <div
+          className="bg-light p-5 shadow-lg"
+          style={{
+            width: "700px",
+            maxWidth: "95%",
+            borderRadius: "30px",
+          }}
+        >
+          <div className="text-center mb-4">
+    <img
+        src={logonova}
+        alt="Logo BiblioGestão"
+        style={{
+            width: "90px",
+            borderRadius: "22px"
+        }}
+    />
+</div>
+          <div className="mb-4">
+            <h1 className="text-center fw-bold mb-2">
+              Cadastro de Livros
+            </h1>
+
+            <p className="text-center text-secondary">
+              Preencha as informações para cadastrar uma nova obra no acervo.
+            </p>
+          </div>
+
+          <form onSubmit={sendForm}>
+            <BookFields
+              isbn={isbn}
+              setISBN={setISBN}
+              title={title}
+              setTitle={setTitle}
+              subtitle={subtitle}
+              setSubtitle={setSubtitle}
+              edition={edition}
+              setEdition={setEdition}
+              language={language}
+              setLanguage={setLanguage}
+              publicationYear={publicationYear}
+              setPublicationYear={setPublicationYear}
+              genres={genres}
+              setGenres={setGenres}
+              inputGenres={inputGenres}
+              setInputGenres={setInputGenres}
+            />
+
+            <AuthorFields
+              authorFullName={authorFullName}
+              setAuthorFullName={setAuthorFullName}
+            />
+
+            <PublisherFields
+              publisherName={publisherName}
+              setPublisherName={setPublisherName}
+              publisherCountry={publisherCountry}
+              setPublisherCountry={setPublisherCountry}
+            />
+
+            <CollectionFields
+              numberBooksInserted={numberBooksInserted}
+              setNumberBooksInserted={setNumberBooksInserted}
+              bookConditions={bookConditions}
+              setBookConditions={setBookConditions}
+            />
+
+            <button
+              type="submit"
+              className="btn btn-lg w-100 rounded-4 text-white botao-bibliogestao"
+            >
+              Cadastrar livro
+            </button>
+          </form>
+        </div>
+      </div>
     </>
   );
 }

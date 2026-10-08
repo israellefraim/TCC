@@ -1,4 +1,3 @@
-// https://chatgpt.com/share/6abd420f-9a00-83e9-a88c-2d467d90f6ef?ogimg=plain
 interface CollectionFieldsProps {
   numberBooksInserted: number;
   setNumberBooksInserted: React.Dispatch<React.SetStateAction<number>>;
@@ -35,8 +34,8 @@ const conditions = [
   {
     number: 5,
     name: "Novo",
-    description: "Sem sinais de uso."
-  }
+    description: "Sem sinais de uso.",
+  },
 ];
 
 function CollectionFields({
@@ -47,7 +46,8 @@ function CollectionFields({
 }: CollectionFieldsProps) {
 
   const totalDistributed = bookConditions.reduce(
-    (total, quantity) => total + quantity, 0
+    (total, quantity) => total + quantity,
+    0
   );
 
   function handleConditionChange(
@@ -55,97 +55,118 @@ function CollectionFields({
     quantity: number
   ) {
     const newConditions = [...bookConditions];
-  
+
     newConditions[conditionNumber] = quantity;
-  
+
     setBookConditions(newConditions);
   }
 
-  return (    
-    <>      
-      <fieldset className="border border-dark p-3 rounded mb-3">
+  return (
+    <fieldset className="fieldset-bibliogestao">
 
-        <legend className="float-none w-auto px-2">
-          Acervo
-        </legend>
+      <legend className="float-none w-auto px-2 legend-bibliogestao">
+        Acervo
+      </legend>
 
-        <div className="mb-5">
+      <div className="mb-5">
 
-          <label htmlFor="inputNumberBooksInserted" className="form-label">
-            Quantidade total de livros a ser inseridos          
-          </label>
+        <label
+          htmlFor="inputNumberBooksInserted"
+          className="form-label label-bibliogestao"
+        >
+          Quantidade total de livros a ser inseridos
+        </label>
 
-          <input
-            type="number"
-            className="form-control"
-            id="inputNumberBooksInserted"
-            min="1"
-            value={numberBooksInserted}
-            onChange={(event) => setNumberBooksInserted(Number(event.target.value))}
-          />
+        <input
+          type="number"
+          className="form-control campo-bibliogestao"
+          id="inputNumberBooksInserted"
+          min="1"
+          value={numberBooksInserted}
+          onChange={(event) =>
+            setNumberBooksInserted(Number(event.target.value))
+          }
+        />
 
+      </div>
+
+      <div className="d-flex fw-bold fs-5 mb-2">
+        <div className="flex-grow-1">
+          Condição
         </div>
 
-        <div className="d-flex fw-bold fs-5 mb-1">
-          <div className="flex-grow-1">
-            Condição
-          </div>
-
-          <div className="text-start flex-shrink-0">
-            Quantidade
-          </div>
+        <div className="text-start flex-shrink-0">
+          Quantidade
         </div>
+      </div>
 
-        {conditions.map((condition) => (
-          <div key={condition.number} className="d-flex align-items-center border-bottom py-3">
-            
-            <span className="badge bg-primary fs-6">
-              {condition.number}              
-            </span>
-            
-            <div className="flex-grow-1 px-3" style={{ minWidth: 0}}>
-              
-              <strong>
-                {condition.name}
-              </strong>
+      {conditions.map((condition) => (
+        <div
+          key={condition.number}
+          className="d-flex align-items-center border-bottom py-3"
+        >
 
-              <div className="text-muted small">
-                {condition.description}
-              </div>
+          <span
+            className="badge fs-6"
+            style={{
+              backgroundColor: "#1A335B",
+              minWidth: "35px",
+              borderRadius: "10px",
+            }}
+          >
+            {condition.number}
+          </span>
 
-              
+          <div
+            className="flex-grow-1 px-3"
+            style={{ minWidth: 0 }}
+          >
+            <strong>
+              {condition.name}
+            </strong>
+
+            <div className="text-muted small">
+              {condition.description}
             </div>
-
-            <div>
-                <input
-                  type="number"
-                  className="form-control"
-                  min="0"
-                  value={bookConditions[condition.number]}
-                  onChange={(event) => handleConditionChange(condition.number, Number(event.target.value))}
-                />
-            </div>
-
           </div>
-        ))}
 
-        <div className="text-end mt-4">
-          <strong>Total distribuído: {totalDistributed} / {numberBooksInserted}</strong>
+          <div style={{ width: "90px" }}>
+            <input
+              type="number"
+              className="form-control campo-bibliogestao"
+              min="0"
+              value={bookConditions[condition.number]}
+              onChange={(event) =>
+                handleConditionChange(
+                  condition.number,
+                  Number(event.target.value)
+                )
+              }
+            />
+          </div>
+
         </div>
-        
-        {totalDistributed === numberBooksInserted &&
-          <div className="text-success text-end">
-            ✅ Quantidades conferem
-          </div>
-        }
+      ))}
 
-        {totalDistributed !== numberBooksInserted &&
-          <div className="text-danger text-end">
-            ⚠️ Quantidade não confere
-          </div>
-        }
-      </fieldset>
-    </>
+      <div className="text-end mt-4">
+        <strong>
+          Total distribuído: {totalDistributed} / {numberBooksInserted}
+        </strong>
+      </div>
+
+      {totalDistributed === numberBooksInserted && (
+        <div className="text-success text-end mt-2">
+          ✅ Quantidades conferem
+        </div>
+      )}
+
+      {totalDistributed !== numberBooksInserted && (
+        <div className="text-danger text-end mt-2">
+          ⚠️ Quantidade não confere
+        </div>
+      )}
+
+    </fieldset>
   );
 }
 

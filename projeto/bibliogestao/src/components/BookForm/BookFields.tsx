@@ -35,6 +35,7 @@ function BookFields({
   inputGenres,
   setInputGenres,
 }: BooksFieldProps) {
+
   const addGenre = () => {
     const genre = inputGenres.trim();
 
@@ -61,134 +62,166 @@ function BookFields({
   };
 
   return (
-    <>
-      {/* BOOKS FIELD */}
-      <fieldset className="border border-dark p-3 rounded mb-3">
-        <legend className="float-none w-auto px-2">Informações da Obra</legend>
-        {/* ISBN -- Required Text MaxLength=13 */}
-        <div className="mb-3">
-          <label htmlFor="inputISBN" className="form-label">
-            ISBN
-          </label>
+    <fieldset className="fieldset-bibliogestao">
+
+      <legend className="float-none w-auto px-2 legend-bibliogestao">
+        Informações da Obra
+      </legend>
+
+      <div className="mb-4">
+        <label htmlFor="inputISBN" className="form-label label-bibliogestao">
+          ISBN
+        </label>
+
+        <input
+          required
+          type="text"
+          maxLength={13}
+          className="form-control campo-bibliogestao meu-placeholder"
+          id="inputISBN"
+          placeholder="Digite o ISBN"
+          value={isbn}
+          onChange={(event) => setISBN(event.target.value)}
+        />
+      </div>
+
+      <div className="mb-4">
+        <label htmlFor="inputTitle" className="form-label label-bibliogestao">
+          Título
+        </label>
+
+        <input
+          required
+          type="text"
+          className="form-control campo-bibliogestao meu-placeholder"
+          id="inputTitle"
+          placeholder="Digite o título da obra"
+          value={title}
+          onChange={(event) => setTitle(event.target.value)}
+        />
+      </div>
+
+      <div className="mb-4">
+        <label htmlFor="inputSubtitle" className="form-label label-bibliogestao">
+          Subtítulo
+        </label>
+
+        <input
+          type="text"
+          className="form-control campo-bibliogestao meu-placeholder"
+          id="inputSubtitle"
+          placeholder="Digite o subtítulo"
+          value={subtitle}
+          onChange={(event) => setSubtitle(event.target.value)}
+        />
+      </div>
+
+      <div className="mb-4">
+        <label htmlFor="inputEdition" className="form-label label-bibliogestao">
+          Edição
+        </label>
+
+        <input
+          type="number"
+          className="form-control campo-bibliogestao"
+          id="inputEdition"
+          value={edition}
+          onChange={(event) => setEdition(Number(event.target.value))}
+        />
+      </div>
+
+      <div className="mb-4">
+        <label htmlFor="inputLanguage" className="form-label label-bibliogestao">
+          Idioma
+        </label>
+
+        <input
+          type="text"
+          className="form-control campo-bibliogestao meu-placeholder"
+          id="inputLanguage"
+          placeholder="Ex.: Português"
+          value={language}
+          onChange={(event) => setLanguage(event.target.value)}
+        />
+      </div>
+
+      <div className="mb-4">
+        <label
+          htmlFor="inputPublicationYear"
+          className="form-label label-bibliogestao"
+        >
+          Ano de Publicação
+        </label>
+
+        <input
+          type="number"
+          min={1000}
+          max={9999}
+          className="form-control campo-bibliogestao"
+          id="inputPublicationYear"
+          value={publicationYear}
+          onChange={(event) =>
+            setPublicationYear(Number(event.target.value))
+          }
+        />
+      </div>
+
+      <div className="mb-4">
+        <label htmlFor="inputGenres" className="form-label label-bibliogestao">
+          Gêneros
+        </label>
+
+        <div className="d-flex gap-2">
           <input
-            required
             type="text"
-            maxLength={13}
-            className="form-control"
-            id="inputISBN"
-            value={isbn}
-            onChange={(event) => setISBN(event.target.value)}
+            className="form-control campo-bibliogestao meu-placeholder"
+            id="inputGenres"
+            placeholder="Digite um gênero"
+            value={inputGenres}
+            onKeyDown={handleKeyDown}
+            onChange={(event) => setInputGenres(event.target.value)}
           />
+
+          <button
+            className="btn text-white rounded-4 px-4"
+            style={{ backgroundColor: "#1A335B" }}
+            type="button"
+            onClick={addGenre}
+          >
+            Adicionar
+          </button>
         </div>
-        {/* Title -- Required */}
-        <div className="mb-3">
-          <label htmlFor="inputTitle" className="form-label">
-            Título
-          </label>
-          <input
-            required
-            type="text"
-            className="form-control"
-            id="inputTitle"
-            value={title}
-            onChange={(event) => setTitle(event.target.value)}
-          />
-        </div>
-        {/* Subtitle input */}
-        <div className="mb-3">
-          <label htmlFor="inputSubtitle" className="form-label">
-            Subtítulo
-          </label>
-          <input
-            type="text"
-            className="form-control"
-            id="inputSubtitle"
-            value={subtitle}
-            onChange={(event) => setSubtitle(event.target.value)}
-          />
-        </div>
-        {/* Edition -- Number */}
-        <div className="mb-3">
-          <label htmlFor="inputEdition" className="form-label">
-            Edição
-          </label>
-          <input
-            type="number"
-            className="form-control"
-            id="inputEdition"
-            value={edition}
-            onChange={(event) => setEdition(Number(event.target.value))}
-          />
-        </div>
-        {/* Language input */}
-        <div className="mb-3">
-          <label htmlFor="inputLanguage" className="form-label">
-            Idioma
-          </label>
-          <input
-            type="text"
-            className="form-control"
-            id="inputLanguage"
-            value={language}
-            onChange={(event) => setLanguage(event.target.value)}
-          />
-        </div>
-        {/* Publication Year -- Number Min=1000 Max=9999 */}
-        <div className="mb-3">
-          <label htmlFor="inputPublicationYear" className="form-label">
-            Ano de Publicação
-          </label>
-          <input
-            type="number"
-            min={1000}
-            max={9999}
-            className="form-control"
-            id="inputPublicationYear"
-            value={publicationYear}
-            onChange={(event) => setPublicationYear(Number(event.target.value))}
-          />
-        </div>
-        {/* Genres Input */}
-        <div className="mb-3">
-          <label htmlFor="inputGenres" className="form-label">
-            Gêneros
-          </label>
-          <div className="d-flex gap-3">
-            <input
-              type="text"
-              className="form-control"
-              id="inputGenres"
-              value={inputGenres}
-              onKeyDown={handleKeyDown}
-              onChange={(event) => setInputGenres(event.target.value)}
-            />
-            <input
-              className="btn btn-primary"
+      </div>
+
+      <div className="mb-2 d-flex flex-wrap gap-2">
+        {genres.map((genre) => (
+          <span
+            key={genre}
+            className="badge fs-6 px-3 py-2"
+            style={{
+              backgroundColor: "#1A335B",
+              borderRadius: "12px",
+            }}
+          >
+            {genre}
+
+            <button
               type="button"
-              value="Adicionar"
-              onClick={addGenre}
-            />
-          </div>
-        </div>
-        {/* Genres List */}
-        <div className="mb-3 d-flex gap-2">
-          {genres.map((genre) => (
-            <span key={genre} className="badge text-bg-primary fs-6">
-              {genre}
-              <button
-                type="button"
-                className="border-0 bg-transparent text-white fw-bold p-0"
-                aria-label={`Remover ${genre}`}
-                style={{ fontSize: "1.1rem", lineHeight: 1, marginLeft: "6px" }}
-                onClick={() => removeGenre(genre)}
-              >
-                x
-              </button>
-            </span>
-          ))}
-        </div>
-      </fieldset>
-    </>
+              className="border-0 bg-transparent text-white fw-bold p-0"
+              aria-label={`Remover ${genre}`}
+              style={{
+                fontSize: "1.1rem",
+                lineHeight: 1,
+                marginLeft: "8px",
+              }}
+              onClick={() => removeGenre(genre)}
+            >
+              ×
+            </button>
+          </span>
+        ))}
+      </div>
+    </fieldset>
   );
 }
 

@@ -7,6 +7,7 @@ function AuthorFields({
   authorFullName,
   setAuthorFullName,
 }: AuthorFieldsProps) {
+
   function addAuthor() {
     setAuthorFullName([...authorFullName, ""]);
   }
@@ -25,18 +26,26 @@ function AuthorFields({
   }
 
   return (
-    <>
-      {/* AUTHOR FIELD */}
-      <fieldset className="border border-dark p-3 rounded mb-3">
-        <legend className="float-none w-auto px-2">Autoria</legend>
+    <fieldset className="fieldset-bibliogestao">
 
-        {authorFullName.map((author, index) => (
-          <div className="input-group mb-3" key={index}>
-            <label htmlFor={`author-${index}`} className="input-group-text">
-              Autor {index + 1}
-            </label>
+      <legend className="float-none w-auto px-2 legend-bibliogestao">
+        Autoria
+      </legend>
+
+      {authorFullName.map((author, index) => (
+        <div className="mb-4" key={index}>
+
+          <label
+            htmlFor={`author-${index}`}
+            className="form-label label-bibliogestao"
+          >
+            Autor {index + 1}
+          </label>
+
+          <div className="d-flex gap-2">
+
             <input
-              className="form-control"
+              className="form-control campo-bibliogestao meu-placeholder"
               list="datalistOptions"
               id={`author-${index}`}
               placeholder="Digite o nome do autor..."
@@ -49,24 +58,28 @@ function AuthorFields({
             {index > 0 && (
               <button
                 type="button"
-                className="btn btn-outline-danger"
+                className="btn btn-outline-danger rounded-4 px-4"
                 onClick={() => removeAuthor(index)}
               >
-                X
+                Remover
               </button>
             )}
+
           </div>
-        ))}
-
-        <div className="d-grip gap-2">
-          <button className="btn btn-primary" type="button" onClick={addAuthor}>
-            + Adicionar outro autor
-          </button>
         </div>
+      ))}
 
-        <datalist id="datalistOptions"></datalist>
-      </fieldset>
-    </>
+      <button
+        className="btn text-white rounded-4"
+        type="button"
+        style={{ backgroundColor: "#1A335B" }}
+        onClick={addAuthor}
+      >
+        + Adicionar outro autor
+      </button>
+
+      <datalist id="datalistOptions"></datalist>
+    </fieldset>
   );
 }
 
