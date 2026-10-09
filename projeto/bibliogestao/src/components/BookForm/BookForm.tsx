@@ -1,11 +1,12 @@
 import { useState } from "react";
 import { supabase } from "../../lib/supabase-client";
 
-import BookFields from "./BookFields";
-import AuthorFields from "./AuthorFields";
-import PublisherFields from "./PublisherFields";
-import CollectionFields from "./CollectionFields";
+import BookFields from "./BookFields/BookFields";
+import AuthorFields from "./AuthorFields/AuthorFields";
+import PublisherFields from "./PublisherFields/PublisherFields";
+import CollectionFields from "./CollectionFields/CollectionFields";
 
+import { createBook } from "../../services/BookService";
 import { findOrCreatePublisher } from "../../services/publisherService";
 import { findOrCreateAuthors } from "../../services/authorService";
 import { findOrCreateGenres } from "../../services/genreService";
@@ -45,7 +46,8 @@ function BookForm() {
     event.preventDefault();
 
     const totalDistributed = bookConditions.reduce(
-      (total, quantity) => total + quantity, 0
+      (total, quantity) => total + quantity,
+      0,
     );
 
     if (totalDistributed !== numberBooksInserted) {
@@ -54,38 +56,35 @@ function BookForm() {
     }
 
     const conditionsObject = Object.fromEntries(
-      bookConditions.map((quantity, index) => [
-        `condition_${index}`,
-        quantity
-      ])
+      bookConditions.map((quantity, index) => [`condition_${index}`, quantity]),
     );
 
     const publisherId = await findOrCreatePublisher(
       publisherName,
-      publisherCountry
-    )
+      publisherCountry,
+    );
 
-    const authorIds = await findOrCreateAuthors(
-      authorFullName
-    )
+    const authorIds = await findOrCreateAuthors(authorFullName);
 
-    const genreIds = await findOrCreateGenres(
-      genres
-    )
+    const genreIds = await findOrCreateGenres(genres);
 
     const newBook = {
       // Foreign Keys
       publisher_id: publisherId,
-      // Rows
+      // Columns
       isbn: isbn,
       title: title,
       subtitle: subtitle,
       edition: edition,
       language: language,
       publication_year: publicationYear,
-      stock_quantity: numberBooksInserted,   
-      conditions: conditionsObject   
+      stock_quantity: numberBooksInserted,
+      conditions: conditionsObject,
     };
+
+    const bookData = {}
+
+    await createBook(newBook);
 
     const { data, error } = await supabase
       .from("Books")
@@ -102,13 +101,13 @@ function BookForm() {
 
     const bookAuthors = authorIds.map((authorId) => ({
       book_id: bookId,
-      author_id: authorId
-    }))
+      author_id: authorId,
+    }));
 
     const bookGenres = genreIds.map((genreId) => ({
       book_id: bookId,
-      genre_id: genreId
-    }))
+      genre_id: genreId,
+    }));
 
     const { error: bookAuthorsError } = await supabase
       .from("BookAuthors")
@@ -133,56 +132,58 @@ function BookForm() {
 
   return (
     <>
-      <h1>Cadastro de Livros</h1>
-      <br></br>
-      <form onSubmit={sendForm}>
-        {/* BOOKS FIELD */}
-        <BookFields
-          isbn={isbn}
-          setISBN={setISBN}
-          title={title}
-          setTitle={setTitle}
-          subtitle={subtitle}
-          setSubtitle={setSubtitle}
-          edition={edition}
-          setEdition={setEdition}
-          language={language}
-          setLanguage={setLanguage}
-          publicationYear={publicationYear}
-          setPublicationYear={setPublicationYear}
-          genres={genres}
-          setGenres={setGenres}
-          inputGenres={inputGenres}
-          setInputGenres={setInputGenres}
-        />
+      <section id="BookForm" className="container">
+        <h1>Cadastro de Livros</h1>
+        <br></br>
+        <form onSubmit={sendForm}>
+          {/* BOOKS FIELD */}
+          <BookFields
+            isbn={isbn}
+            setISBN={setISBN}
+            title={title}
+            setTitle={setTitle}
+            subtitle={subtitle}
+            setSubtitle={setSubtitle}
+            edition={edition}
+            setEdition={setEdition}
+            language={language}
+            setLanguage={setLanguage}
+            publicationYear={publicationYear}
+            setPublicationYear={setPublicationYear}
+            genres={genres}
+            setGenres={setGenres}
+            inputGenres={inputGenres}
+            setInputGenres={setInputGenres}
+          />
 
-        {/* AUTHOR FIELD */}
-        <AuthorFields
-          authorFullName={authorFullName}
-          setAuthorFullName={setAuthorFullName}
-        />
+          {/* AUTHOR FIELD */}
+          <AuthorFields
+            authorFullName={authorFullName}
+            setAuthorFullName={setAuthorFullName}
+          />
 
-        {/* PUBLISHERS FIELD */}
-        <PublisherFields
-          publisherName={publisherName}
-          setPublisherName={setPublisherName}
-          publisherCountry={publisherCountry}
-          setPublisherCountry={setPublisherCountry}
-        />
+          {/* PUBLISHERS FIELD */}
+          <PublisherFields
+            publisherName={publisherName}
+            setPublisherName={setPublisherName}
+            publisherCountry={publisherCountry}
+            setPublisherCountry={setPublisherCountry}
+          />
 
-        {/* COLLECTION FIELD */}
-        <CollectionFields
-          numberBooksInserted={numberBooksInserted}
-          setNumberBooksInserted={setNumberBooksInserted}
-          bookConditions={bookConditions}
-          setBookConditions={setBookConditions}
-        />
+          {/* COLLECTION FIELD */}
+          <CollectionFields
+            numberBooksInserted={numberBooksInserted}
+            setNumberBooksInserted={setNumberBooksInserted}
+            bookConditions={bookConditions}
+            setBookConditions={setBookConditions}
+          />
 
-        <button type="submit" className="btn btn-primary">
-          Enviar
-        </button>
-      </form>
-      <br></br>
+          <button type="submit" className="btn btn-primary">
+            Enviar
+          </button>
+        </form>
+        <br></br>
+      </section>
     </>
   );
 }
