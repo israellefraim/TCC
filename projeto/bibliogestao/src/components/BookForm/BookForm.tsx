@@ -5,7 +5,9 @@ import AuthorFields from "./AuthorFields/AuthorFields";
 import PublisherFields from "./PublisherFields/PublisherFields";
 import CollectionFields from "./CollectionFields/CollectionFields";
 
-import { createBook } from "../../services/BookService";
+import { createBook } from "../../services/bookService";
+
+import { validateISBN } from "../../utils/bookValidation";
 
 function BookForm() {
   // Book
@@ -47,13 +49,16 @@ function BookForm() {
     );
 
     if (totalDistributed !== numberBooksInserted) {
-      console.log("A quantidade de livros não confere!");
+      return;
+    }
+
+    if (!validateISBN(isbn)) {
       return;
     }
 
     const bookData = {
       // Book
-      isbn: isbn,
+      isbn: isbn.replace(/[\s-]/g, "").toUpperCase(),
       title: title,
       subtitle: subtitle,
       edition: edition,
