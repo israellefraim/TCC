@@ -1,13 +1,23 @@
 export type BookFormdata = {
-  // Foreign Keys
-  publisher_id: number;
-  // Columns
+  // Book
   isbn: string;
   title: string;
   subtitle: string;
   edition: number;
   language: string;
   publication_year: number;
-  stock_quantity: number;
-  conditions: Record<string, number>;
+
+  // Genres
+  genres: string[];
+
+  // Authors
+  authors: string[];
+
+  // Publisher
+  publisher_name: string;
+  publisher_country: string;
+
+  // Collection
+  number_books_inserted: number;
+  book_conditions: number[];
 };

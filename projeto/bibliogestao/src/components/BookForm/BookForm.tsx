@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { supabase } from "../../lib/supabase-client";
 
 import BookFields from "./BookFields/BookFields";
 import AuthorFields from "./AuthorFields/AuthorFields";
@@ -7,9 +6,6 @@ import PublisherFields from "./PublisherFields/PublisherFields";
 import CollectionFields from "./CollectionFields/CollectionFields";
 
 import { createBook } from "../../services/BookService";
-import { findOrCreatePublisher } from "../../services/publisherService";
-import { findOrCreateAuthors } from "../../services/authorService";
-import { findOrCreateGenres } from "../../services/genreService";
 
 function BookForm() {
   // Book
@@ -24,8 +20,8 @@ function BookForm() {
   const [genres, setGenres] = useState<string[]>([]);
   const [inputGenres, setInputGenres] = useState("");
 
-  // Author
-  const [authorFullName, setAuthorFullName] = useState<string[]>([""]);
+  // Authors
+  const [authors, setAuthors] = useState<string[]>([""]);
 
   // Publisher
   const [publisherName, setPublisherName] = useState("");
@@ -55,79 +51,31 @@ function BookForm() {
       return;
     }
 
-    const conditionsObject = Object.fromEntries(
-      bookConditions.map((quantity, index) => [`condition_${index}`, quantity]),
-    );
-
-    const publisherId = await findOrCreatePublisher(
-      publisherName,
-      publisherCountry,
-    );
-
-    const authorIds = await findOrCreateAuthors(authorFullName);
-
-    const genreIds = await findOrCreateGenres(genres);
-
-    const newBook = {
-      // Foreign Keys
-      publisher_id: publisherId,
-      // Columns
+    const bookData = {
+      // Book
       isbn: isbn,
       title: title,
       subtitle: subtitle,
       edition: edition,
       language: language,
       publication_year: publicationYear,
-      stock_quantity: numberBooksInserted,
-      conditions: conditionsObject,
+
+      // Genres
+      genres: genres,
+
+      // Authors
+      authors: authors,
+
+      // Publisher
+      publisher_name: publisherName,
+      publisher_country: publisherCountry,
+
+      // Collection
+      number_books_inserted: numberBooksInserted,
+      book_conditions: bookConditions,
     };
 
-    const bookData = {}
-
-    await createBook(newBook);
-
-    const { data, error } = await supabase
-      .from("Books")
-      .insert(newBook)
-      .select("id")
-      .single();
-
-    if (error) {
-      console.error("Erro ao cadastrar:", error);
-      return;
-    }
-
-    const bookId = data.id;
-
-    const bookAuthors = authorIds.map((authorId) => ({
-      book_id: bookId,
-      author_id: authorId,
-    }));
-
-    const bookGenres = genreIds.map((genreId) => ({
-      book_id: bookId,
-      genre_id: genreId,
-    }));
-
-    const { error: bookAuthorsError } = await supabase
-      .from("BookAuthors")
-      .insert(bookAuthors);
-
-    if (bookAuthorsError) {
-      console.error("Error BookAuthors:", bookAuthorsError);
-      return;
-    }
-
-    const { error: bookGenresError } = await supabase
-      .from("BookGenres")
-      .insert(bookGenres);
-
-    if (bookGenresError) {
-      console.error("Error BookGenres:", bookGenresError);
-      return;
-    }
-
-    return;
+    await createBook(bookData);
   }
 
   return (
@@ -157,10 +105,7 @@ function BookForm() {
           />
 
           {/* AUTHOR FIELD */}
-          <AuthorFields
-            authorFullName={authorFullName}
-            setAuthorFullName={setAuthorFullName}
-          />
+          <AuthorFields authors={authors} setAuthors={setAuthors} />
 
           {/* PUBLISHERS FIELD */}
           <PublisherFields
