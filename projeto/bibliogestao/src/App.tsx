@@ -1,9 +1,8 @@
 //import LoginForm from "./components/LoginForm/LoginForm";
 //import SearchPage from "./components/SearchPage/SearchPage";
-import BookForm from "./components/BookForm/BookForm";
+import Home from "./components/HomePage/Home";
 
-function App() {
-  return <BookForm />;
+export default function App() {
+  return <Home />;
 }
 
-export default App;
