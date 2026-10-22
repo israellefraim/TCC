@@ -249,7 +249,6 @@ function HomePage() {
           </div>
 
           <div className="col-12 col-md-6 col-lg-3">
-            {/* TODO: ligar quando a página de relatórios existir */}
             <button
               type="button"
               className={cardAtalhoClasses}
@@ -257,7 +256,7 @@ function HomePage() {
             >
               <BarChartIcon size={26} />
               <div className="flex-grow-1 d-flex flex-column">
-                <strong className="text-dark">Relatórios</strong>
+                <strong className="text-dark">Dashboard</strong>
                 <span className="small text-secondary">
                   Veja estatísticas do acervo
                 </span>
