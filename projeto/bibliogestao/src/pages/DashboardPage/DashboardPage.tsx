@@ -81,10 +81,7 @@ function DashboardPage() {
       </style>
 
       <main className="dashboard-page container py-4 py-lg-5">
-        <header className="mb-4">
-          <p className="mb-1" style={{ color: CINZA_AZULADO }}>
-            Estatísticas do acervo
-          </p>
+        <header className="mb-4">          
           <h1
             className="fw-bold m-0"
             style={{
@@ -93,8 +90,11 @@ function DashboardPage() {
               letterSpacing: "-.01em",
             }}
           >
-            Relatórios
+            Dashboard
           </h1>
+          <p className="pt-2" style={{ color: CINZA_AZULADO }}>
+            Estatísticas do acervo
+          </p>
         </header>
 
         {loading && (

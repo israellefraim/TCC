@@ -206,7 +206,7 @@ function AppLayout() {
                 className="nav-link"
                 onClick={() => setMenuOpen(false)}
               >
-                Relatórios
+                Dashboard
               </NavLink>
             </div>
 
